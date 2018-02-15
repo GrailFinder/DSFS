@@ -5,7 +5,7 @@ import math
 class Vector():
 
     def __init__(self, v):
-        self.v = v
+        self.m = self.v = v
 
     def __iter__(self):
         for e in self.v:
@@ -20,32 +20,25 @@ class Vector():
     def subtract(self, w):
         return [v_i - w_i for v_i, w_i in zip(self.v, w)]
 
-    def sum(self, vectors):
-        result = vectors[0]
-        for vector in vectors[1:]:
-            result = self.v.add(result, vector)
-            print(vector, result)
-        return result
+    
+    def get_row(self, i):
+        return self.m[i]
 
-    def scalar_multiply(self, c, v):
-        return [c * v_i for v_i in v]
-
-    def mean(self, vectors):
-        n = len(vectors)
-        return self.scalar_multiply(1/n, self.sum(vectors))
+    def scalar_multiply(self, c):
+        return [c * v_i for v_i in self.v]
 
     def dot(self, w):
         """v_1 * w_1 + ... + v_n * w_n"""
         return sum(v_i * w_i for v_i, w_i in zip(self.v, w))
 
-    def sum_of_squares(self, v):
-        return self.dot(v)
+    def sum_of_squares(self):
+        return self.dot(self.v)
 
-    def magnitude(self, v):
-        return math.sqrt(self.sum_of_squares(v))
+    def magnitude(self):
+        return math.sqrt(self.sum_of_squares())
 
     def squared_distance(self, v):
-        return self.sum_of_squares(self.subtract(v))
+        return self.subtract(v).sum_of_squares()
 
     def distance(self, v):
         return math.sqrt(self.squared_distance(v))

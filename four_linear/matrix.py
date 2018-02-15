@@ -1,6 +1,8 @@
 #!/home/grail/anaconda3/bin/python
 
-class Matrix():
+from vector import Vector
+
+class Matrix(Vector):
 
     def __init__(self, m):
         self.m = m
@@ -14,8 +16,16 @@ class Matrix():
         num_cols = len(self.m[0]) if self.m else 0
         return num_rows, num_cols
 
-    def get_row(self, i):
-        return self.m[i]
+    def sum(self):
+        result = self.m[0]
+        for vector in self.m[1:]:
+            result = result.add(result, vector)
+        return result
+
+    def mean(self):
+        n = len(self.m)
+        self.v = self.sum()
+        return self.scalar_multiply(1/n)
 
     def get_column(self, j):
         return [row[j] for row in self.m]
